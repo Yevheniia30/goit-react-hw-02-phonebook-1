@@ -3,12 +3,12 @@ import shortid from 'shortid';
 // import s from './App.module.css';
 import Form from './Components/Form';
 import ContactsList from './Components/ContactsList';
+import Filter from './Components/Filter';
 
 class App extends Component {
   state = {
     contacts: [],
-    // name: '',
-    // number: '',
+    filter: '',
   };
 
   // ф-ция для получения данных введенных в форму
@@ -25,13 +25,32 @@ class App extends Component {
     }));
   };
 
+  // записываем значение ипута фильтра в стейт
+  filterHandler = event => {
+    this.setState({ filter: event.currentTarget.value });
+  };
+
+  // ф-ция фильтра по имени
+  getFilteredContacts = () => {
+    const { contacts, filter } = this.state;
+    const normalizedFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizedFilter),
+    );
+  };
+
   render() {
-    const { contacts } = this.state;
+    const { filter } = this.state;
+    // отфильтрованные контакты
+    const filteredContacts = this.getFilteredContacts();
+
     return (
       <div className="App-main">
-        {/* пропс onSubmit */}
+        <h1>Phonebook</h1>
         <Form onSubmit={this.formOnSubmitHandler} />
-        <ContactsList contacts={contacts} />
+        <h2>Contacts</h2>
+        <Filter filter={filter} onChange={this.filterHandler} />
+        <ContactsList contacts={filteredContacts} />
       </div>
     );
   }

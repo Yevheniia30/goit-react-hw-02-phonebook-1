@@ -35,21 +35,23 @@ class Form extends Component {
   };
 
   render() {
+    const { name, number } = this.state;
+    const { handleSubmit, nameInputId, handleChange, numberInputId } = this;
     return (
-      <form className={s.form} onSubmit={this.handleSubmit}>
-        <label htmlFor={this.nameInputId} className={s.label}>
+      <form className={s.form} onSubmit={handleSubmit}>
+        <label htmlFor={nameInputId} className={s.label}>
           Name
           <input
             type="text"
             name="name"
             className={s.input}
             placeholder="Enter name"
-            value={this.state.name}
-            onChange={this.handleChange}
-            id={this.nameInputId}
+            value={name}
+            onChange={handleChange}
+            id={nameInputId}
           />
         </label>
-        <label htmlFor={this.numberInputId} className={s.label}>
+        <label htmlFor={numberInputId} className={s.label}>
           Number
           <input
             type="tel"
@@ -57,9 +59,9 @@ class Form extends Component {
             pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
             className={s.input}
             placeholder="Enter phone number"
-            value={this.state.number}
-            onChange={this.handleChange}
-            id={this.numberInputId}
+            value={number}
+            onChange={handleChange}
+            id={numberInputId}
           />
         </label>
         <button type="submit" className={s.button}>
