@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import shortid from 'shortid';
 // import s from './App.module.css';
 import Form from './Components/Form';
@@ -13,16 +14,27 @@ class App extends Component {
 
   // ф-ция для получения данных введенных в форму
   formOnSubmitHandler = ({ name, number }) => {
-    // console.log(data);
+    const { contacts } = this.state;
     const contact = {
       id: shortid.generate(),
       name,
       number,
     };
-    // добавляем каждый введенный контакт в массив
-    this.setState(prevState => ({
-      contacts: [contact, ...prevState.contacts],
-    }));
+
+    // выводим предупреждение если хотя бы одно из полей не заполнено
+    if (!name || !number) {
+      alert('Enter name and phone number!');
+      return;
+    }
+
+    // добавляем каждый введенный контакт в массив (кроме тех которые там уже есть)
+    contacts.find(
+      ({ name, number }) => name === contact.name || number === contact.number,
+    )
+      ? alert('This subscriber is already in contacts')
+      : this.setState(prevState => ({
+          contacts: [contact, ...prevState.contacts],
+        }));
   };
 
   // записываем значение ипута фильтра в стейт
@@ -39,6 +51,13 @@ class App extends Component {
     );
   };
 
+  // удаление контакта
+  deleteHandler = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
   render() {
     const { filter } = this.state;
     // отфильтрованные контакты
@@ -50,7 +69,10 @@ class App extends Component {
         <Form onSubmit={this.formOnSubmitHandler} />
         <h2>Contacts</h2>
         <Filter filter={filter} onChange={this.filterHandler} />
-        <ContactsList contacts={filteredContacts} />
+        <ContactsList
+          contacts={filteredContacts}
+          onDelete={this.deleteHandler}
+        />
       </div>
     );
   }

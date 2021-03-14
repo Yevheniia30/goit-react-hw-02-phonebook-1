@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import shortid from 'shortid';
 import s from './Form.module.css';
 
@@ -56,7 +57,7 @@ class Form extends Component {
           <input
             type="tel"
             name="number"
-            pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
+            // pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
             className={s.input}
             placeholder="Enter phone number"
             value={number}
