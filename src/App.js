@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import shortid from 'shortid';
-// import s from './App.module.css';
+import s from './App.module.css';
 import Form from './Components/Form';
 import ContactsList from './Components/ContactsList';
 import Filter from './Components/Filter';
@@ -64,7 +64,7 @@ class App extends Component {
     const filteredContacts = this.getFilteredContacts();
 
     return (
-      <div className="App-main">
+      <div className={s.App}>
         <h1>Phonebook</h1>
         <Form onSubmit={this.formOnSubmitHandler} />
         <h2>Contacts</h2>
